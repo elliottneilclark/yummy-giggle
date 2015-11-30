@@ -32,4 +32,4 @@ void Deck::shuffle() {
 
 bool Deck::has_more() { return next_card_ < 52; }
 Card &Deck::take() { return cards_[next_card_++]; }
-}
+}  // namespace yg

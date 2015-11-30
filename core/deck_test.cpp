@@ -1,9 +1,9 @@
 #include "core/deck.h"
-#include "core/card.h"
-
-#include "gtest/gtest.h"
 
 #include <set>
+
+#include "core/card.h"
+#include "gtest/gtest.h"
 
 using namespace yg;
 

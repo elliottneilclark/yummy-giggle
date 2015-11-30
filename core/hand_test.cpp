@@ -92,8 +92,8 @@ TEST(HandTest, testWheelStraight) {
   h.add_card(c4);
   h.add_card(c5);
 
-  EXPECT_GE(h.rank(), 1599);
-  EXPECT_LT(h.rank(), 1609);
+  EXPECT_GE(h.rank(), 15990);
+  EXPECT_LT(h.rank(), 16090);
 }
 
 TEST(HandTest, testFlush) {
@@ -110,8 +110,8 @@ TEST(HandTest, testFlush) {
   h.add_card(c4);
   h.add_card(c5);
 
-  EXPECT_GE(h.rank(), 322);
-  EXPECT_LT(h.rank(), 1599);
+  EXPECT_GE(h.rank(), 3220);
+  EXPECT_LT(h.rank(), 15990);
 }
 TEST(HandTest, testFour) {
   Hand h;
@@ -144,8 +144,8 @@ TEST(HandTest, testFull) {
   h.add_card(c4);
   h.add_card(c5);
 
-  EXPECT_GE(h.rank(), 166);
-  EXPECT_LT(h.rank(), 322);
+  EXPECT_GE(h.rank(), 1660);
+  EXPECT_LT(h.rank(), 3220);
 }
 TEST(HandTest, testThree) {
   Hand h;
@@ -153,7 +153,7 @@ TEST(HandTest, testThree) {
   Card c2{kTwo, kClubs};
   Card c3{kTwo, kDiamonds};
   Card c4{kThree, kSpades};
-  Card c5{kFive, kClubs};
+  Card c5{kFour, kClubs};
 
   h.add_card(c1);
   h.add_card(c2);
@@ -161,8 +161,8 @@ TEST(HandTest, testThree) {
   h.add_card(c4);
   h.add_card(c5);
 
-  EXPECT_GE(h.rank(), 1609);
-  EXPECT_LT(h.rank(), 2467);
+  EXPECT_GE(h.rank(), 16090);
+  EXPECT_LT(h.rank(), 24670);
 }
 TEST(HandTest, testTwoPair) {
   Hand h;
@@ -178,8 +178,8 @@ TEST(HandTest, testTwoPair) {
   h.add_card(c4);
   h.add_card(c5);
 
-  EXPECT_GE(h.rank(), 2467);
-  EXPECT_LT(h.rank(), 3325);
+  EXPECT_GE(h.rank(), 246700);
+  EXPECT_LT(h.rank(), 332500);
 }
 TEST(HandTest, testPair) {
   Hand h;
@@ -195,8 +195,8 @@ TEST(HandTest, testPair) {
   h.add_card(c4);
   h.add_card(c5);
 
-  EXPECT_GE(h.rank(), 3325);
-  EXPECT_LT(h.rank(), 6185);
+  EXPECT_GE(h.rank(), 332500);
+  EXPECT_LT(h.rank(), 618500);
 }
 TEST(HandTest, testHighCard) {
   Hand h;
@@ -212,6 +212,6 @@ TEST(HandTest, testHighCard) {
   h.add_card(c4);
   h.add_card(c5);
 
-  EXPECT_GE(h.rank(), 6185);
-  EXPECT_LT(h.rank(), 7462);
+  EXPECT_GE(h.rank(), 618500);
+  EXPECT_LT(h.rank(), 746200);
 }

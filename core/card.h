@@ -2,6 +2,7 @@
 
 #include <cstdint>
 #include <array>
+#include <string>
 
 namespace yg {
 const uint16_t kTwo = 1;
@@ -33,8 +34,8 @@ const std::array<uint8_t, 4> kSuits{kHearts, kDiamonds, kSpades, kClubs};
 const std::array<std::string, 4> kSuitStrings{"h", "d", "s", "c"};
 
 class Card {
-public:
-  Card(uint16_t value = kTwo, uint8_t suit = kHearts);
+ public:
+  explicit Card(uint16_t value = kTwo, uint8_t suit = kHearts);
   uint16_t value() const { return value_; }
   uint8_t suit() const { return suit_; }
   std::string str() const;
@@ -42,10 +43,10 @@ public:
   bool operator==(const Card &rhs) const;
   bool operator!=(const Card &rhs) const;
 
-private:
+ private:
   uint16_t value_;
   uint8_t suit_;
 };
 
 std::ostream &operator<<(::std::ostream &os, const Card &card);
-}
+}  // namespace yg
