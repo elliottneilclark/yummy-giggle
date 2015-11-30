@@ -3,6 +3,7 @@
 #include <cstdint>
 #include <array>
 
+namespace yg {
 const uint16_t kTwo = 1;
 const uint16_t kThree = 1 << 1;
 const uint16_t kFour = 1 << 2;
@@ -20,9 +21,8 @@ const uint16_t kAce = 1 << 12;
 const std::array<uint16_t, 13> kValues{kTwo,   kThree, kFour, kFive, kSix,
                                        kSeven, kEight, kNine, kTen,  kJack,
                                        kQueen, kKing,  kAce};
-const std::array<std::string, 13> kValueStrings{"2", "3", "4", "5", "6", 
-                                                "7", "8", "9", "T", "J",
-                                                "Q", "K", "A"};
+const std::array<std::string, 13> kValueStrings{
+    "2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A"};
 
 const uint8_t kHearts = 1 << 0;
 const uint8_t kDiamonds = 1 << 1;
@@ -38,13 +38,14 @@ public:
   uint16_t value() const { return value_; }
   uint8_t suit() const { return suit_; }
   std::string str() const;
-  bool operator<(const Card& rhs) const;
-  bool operator==(const Card& rhs) const;
-  bool operator!=(const Card& rhs) const;
+  bool operator<(const Card &rhs) const;
+  bool operator==(const Card &rhs) const;
+  bool operator!=(const Card &rhs) const;
 
 private:
   uint16_t value_;
   uint8_t suit_;
 };
 
-std::ostream& operator<<(::std::ostream& os, const Card& card);
+std::ostream &operator<<(::std::ostream &os, const Card &card);
+}

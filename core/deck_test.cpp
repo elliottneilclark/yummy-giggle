@@ -5,6 +5,8 @@
 
 #include <set>
 
+using namespace yg;
+
 TEST(DeckTest, testTake) {
   Deck d;
   std::set<Card> cards;

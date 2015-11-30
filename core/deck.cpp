@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <random>
 
+namespace yg {
 Deck::Deck() {
   int i = 0;
   for (uint8_t suit : kSuits) {
@@ -31,3 +32,4 @@ void Deck::shuffle() {
 
 bool Deck::has_more() { return next_card_ < 52; }
 Card &Deck::take() { return cards_[next_card_++]; }
+}

@@ -1,6 +1,8 @@
 #include "gtest/gtest.h"
 #include "core/card.h"
 
+using namespace yg;
+
 TEST(CardTest, testGetValue) {
   Card c{kThree, kClubs};
   EXPECT_EQ(c.value(), 1 << 1);

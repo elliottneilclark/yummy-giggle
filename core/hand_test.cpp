@@ -2,6 +2,8 @@
 #include "core/deck.h"
 #include "gtest/gtest.h"
 
+using namespace yg;
+
 TEST(HandTest, testAddCard) {
   Hand h;
   Deck d;

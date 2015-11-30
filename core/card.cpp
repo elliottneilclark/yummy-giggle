@@ -1,6 +1,8 @@
 #include "core/card.h"
 #include <cmath>
 
+namespace yg {
+
 using namespace std;
 
 Card::Card(uint16_t value, uint8_t suit) : value_(value), suit_(suit) {}
@@ -25,4 +27,5 @@ bool Card::operator!=(const Card &rhs) const {
 
 ::std::ostream &operator<<(::std::ostream &os, const Card &card) {
   return os << card.str();
+}
 }

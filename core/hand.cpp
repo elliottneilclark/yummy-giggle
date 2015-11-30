@@ -7,6 +7,8 @@
 #include <cmath>
 #include <iostream>
 
+namespace yg {
+
 using namespace std;
 using namespace folly;
 
@@ -64,7 +66,7 @@ int Hand::rank() const {
   if (UNLIKELY(four != counts.end())) {
     // Four of a kind.
     int card_rank = 12 - log2(four->second);
-    int four_rank =  (12 * card_rank); 
+    int four_rank = (12 * card_rank);
     return kBase[1] + four_rank;
   }
 
@@ -139,4 +141,5 @@ unordered_map<uint8_t, uint16_t> Hand::count_cards() const {
   }
 
   return result;
+}
 }
