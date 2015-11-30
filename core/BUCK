@@ -1,0 +1,61 @@
+cxx_library(
+  name = "core",
+  srcs = [
+    "deck.cpp",
+    "card.cpp",
+    "hand.cpp",
+  ],
+  exported_headers = [
+    "card.h",
+    "deck.h",
+    "hand.h",
+  ],
+  tests = [
+    ":card_test",
+    ":deck_test",
+    ":easy_test",
+  ],
+  deps = [
+    "//third-party:folly",
+  ],
+  visibility = [
+    "PUBLIC",
+  ]
+)
+
+cxx_test(
+  name = "card_test",
+  srcs = [
+    "card_test.cpp",
+  ],
+  deps = [
+    ":core",
+  ],
+)
+cxx_test(
+  name = "deck_test",
+  srcs = [
+    "deck_test.cpp",
+  ],
+  deps = [
+    ":core",
+  ]
+)
+cxx_test(
+  name = "hand_test",
+  srcs = [
+    "hand_test.cpp",
+  ],
+  deps = [
+    ":core",
+  ]
+)
+cxx_test(
+  name = "easy_test",
+  srcs = [
+    "easy_test.cpp",
+  ],
+  deps = [
+    ":core",
+  ]
+)

@@ -26,3 +26,12 @@
 *.exe
 *.out
 *.app
+
+
+# Vim being VIM
+*.sw?
+
+
+# Buck
+.buckd
+buck-out

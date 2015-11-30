@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+BASE=$(dirname $0)
+${BASE}/start-docker.sh "buck test --all"
