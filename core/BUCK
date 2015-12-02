@@ -29,7 +29,12 @@ cxx_binary(
     "rank_all.cpp"
   ],
   deps = [
+    "//third-party:folly",
+    "//third-party:follybenchmark",
     ":core",
+  ],
+  visibility = [
+    "PUBLIC",
   ]
 )
 

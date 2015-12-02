@@ -1,14 +1,14 @@
-#include "core/hand.h"
-
 #include <array>
 #include <iostream>
+#include <folly/Benchmark.h>
 
 #include "core/card.h"
+#include "core/hand.h"
 
 using namespace yg;
-using namespace std;
+using namespace folly;
 
-int main (int argc, char *argv[]) {
+BENCHMARK(rankAllHands) {
   std::array<Card, 52> cards = {};
   int i = 0;
   for (uint8_t suit : kSuits) {
@@ -29,11 +29,16 @@ int main (int argc, char *argv[]) {
             h.add_card(cards[c]);
             h.add_card(cards[d]);
             h.add_card(cards[e]);
-
-            cout << h << "\n";
+            auto r = h.rank();
+            doNotOptimizeAway(r);
           }
         }
       }
     }
   }
+}
+
+int main(int argc, char *argv[]) {
+  runBenchmarks();
+  return 0;
 }

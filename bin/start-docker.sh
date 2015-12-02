@@ -7,4 +7,4 @@ if [[ ! -d third-party/googletest ]]; then
 fi
 
 docker build -t yummy-giggle .
-docker run -v ${PWD}:/usr/src/yummy-giggle -it yummy-giggle ${1}
+docker run -v $(pwd):/usr/src/yummy-giggle -it yummy-giggle ${1}

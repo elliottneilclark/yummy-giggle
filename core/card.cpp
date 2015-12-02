@@ -29,7 +29,5 @@ bool Card::operator!=(const Card &rhs) const {
   return value_ != rhs.value_ || suit_ != rhs.suit_;
 }
 
-ostream &operator<<(ostream &os, const Card &card) {
-  return os << card.str();
-}
-}  // namespace yg
+ostream &operator<<(ostream &os, const Card &card) { return os << card.str(); }
+} // namespace yg

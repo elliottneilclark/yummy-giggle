@@ -94,8 +94,8 @@ TEST(HandTest, testWheelStraight) {
   h.add_card(c4);
   h.add_card(c5);
 
-  EXPECT_GE(h.rank(), 15990);
-  EXPECT_LT(h.rank(), 16090);
+  EXPECT_GE(h.rank(), 1l << 56);
+  EXPECT_LT(h.rank(), 1l << 57);
 }
 
 TEST(HandTest, testFlush) {
@@ -104,7 +104,7 @@ TEST(HandTest, testFlush) {
   Card c2{kThree, kHearts};
   Card c3{kFour, kHearts};
   Card c4{kFive, kHearts};
-  Card c5{kNine, kHearts};
+  Card c5{kSeven, kHearts};
 
   h.add_card(c1);
   h.add_card(c2);
@@ -112,25 +112,31 @@ TEST(HandTest, testFlush) {
   h.add_card(c4);
   h.add_card(c5);
 
-  EXPECT_GE(h.rank(), 3220);
-  EXPECT_LT(h.rank(), 15990);
+  EXPECT_GE(h.rank(), 1l << 55);
+  EXPECT_LT(h.rank(), 1l << 56);
 }
 TEST(HandTest, testFour) {
-  Hand h;
-  Card c1{kTwo, kHearts};
-  Card c2{kTwo, kClubs};
-  Card c3{kTwo, kDiamonds};
-  Card c4{kTwo, kSpades};
-  Card c5{kAce, kSpades};
+  for (uint16_t v1 : kValues) {
+    for (uint16_t v2 : kValues) {
+      if (v1 == v2)
+        continue;
+      Hand h;
+      Card c1{v1, kHearts};
+      Card c2{v1, kClubs};
+      Card c3{v1, kDiamonds};
+      Card c4{v1, kSpades};
+      Card c5{v2, kSpades};
 
-  h.add_card(c1);
-  h.add_card(c2);
-  h.add_card(c3);
-  h.add_card(c4);
-  h.add_card(c5);
+      h.add_card(c1);
+      h.add_card(c2);
+      h.add_card(c3);
+      h.add_card(c4);
+      h.add_card(c5);
 
-  EXPECT_GE(h.rank(), 10);
-  EXPECT_LT(h.rank(), 156);
+      EXPECT_GE(h.rank(), 1l << 53);
+      EXPECT_LT(h.rank(), 1l << 54);
+    }
+  }
 }
 TEST(HandTest, testFull) {
   for (uint16_t v1 : kValues) {
@@ -150,8 +156,8 @@ TEST(HandTest, testFull) {
       h.add_card(c4);
       h.add_card(c5);
 
-      EXPECT_GE(h.rank(), 1660);
-      EXPECT_LT(h.rank(), 3220);
+      EXPECT_GE(h.rank(), 1l << 54);
+      EXPECT_LT(h.rank(), 1l << 55);
     }
   }
 }
@@ -176,8 +182,8 @@ TEST(HandTest, testThree) {
         h.add_card(c4);
         h.add_card(c5);
 
-        EXPECT_GE(h.rank(), 16090);
-        EXPECT_LT(h.rank(), 24670);
+        EXPECT_GE(h.rank(), 1l << 57);
+        EXPECT_LT(h.rank(), 1l << 58);
       }
     }
   }
@@ -203,8 +209,8 @@ TEST(HandTest, testTwoPair) {
         h.add_card(c4);
         h.add_card(c5);
 
-        EXPECT_GE(h.rank(), 246700);
-        EXPECT_LT(h.rank(), 332500);
+        EXPECT_GE(h.rank(), 1l << 58);
+        EXPECT_LT(h.rank(), 1l << 59);
       }
     }
   }
@@ -225,8 +231,8 @@ TEST(HandTest, testPair) {
     h.add_card(c4);
     h.add_card(c5);
 
-    EXPECT_GE(h.rank(), 332500);
-    EXPECT_LT(h.rank(), 618500);
+    EXPECT_GE(h.rank(), 1l << 59);
+    EXPECT_LT(h.rank(), 1l << 60);
   }
 }
 TEST(HandTest, testHighCard) {
@@ -243,6 +249,185 @@ TEST(HandTest, testHighCard) {
   h.add_card(c4);
   h.add_card(c5);
 
-  EXPECT_GE(h.rank(), 618500);
-  EXPECT_LT(h.rank(), 746200);
+  EXPECT_GE(h.rank(), 1l << 60);
+  EXPECT_LT(h.rank(), 1l << 61);
+}
+
+TEST(HandTest, testComparePairAces) {
+  for (uint16_t v1 : kValues) {
+    if (v1 == kAce)
+      continue;
+    for (uint16_t v2 : kValues) {
+      if (v1 == v2)
+        continue;
+      for (uint16_t v3 : kValues) {
+        if (v3 == v1 || v3 == v3)
+          continue;
+        for (uint16_t v4 : kValues) {
+          if (v4 == v1 || v4 == v2 || v4 == v3)
+            continue;
+          Hand h1;
+          Card c1{kAce, kHearts};
+          Card c2{kAce, kClubs};
+          Card c3{kTwo, kClubs};
+          Card c4{kThree, kClubs};
+          Card c5{kFour, kClubs};
+
+          h1.add_card(c1);
+          h1.add_card(c2);
+          h1.add_card(c3);
+          h1.add_card(c4);
+          h1.add_card(c5);
+
+          Hand h2;
+          Card b1{v1, kDiamonds};
+          Card b2{v1, kSpades};
+          Card b3{v2, kSpades};
+          Card b4{v3, kSpades};
+          Card b5{v4, kSpades};
+
+          h2.add_card(b1);
+          h2.add_card(b2);
+          h2.add_card(b3);
+          h2.add_card(b4);
+          h2.add_card(b5);
+
+          EXPECT_LT(h2.rank(), h1.rank());
+        }
+      }
+    }
+  }
+}
+TEST(HandTest, testComparePairLow) {
+  for (uint16_t v1 : kValues) {
+    if (v1 == kTwo)
+      continue;
+    for (uint16_t v2 : kValues) {
+      if (v1 == v2)
+        continue;
+      for (uint16_t v3 : kValues) {
+        if (v3 == v1 || v3 == v3)
+          continue;
+        for (uint16_t v4 : kValues) {
+          if (v4 == v1 || v4 == v2 || v4 == v3)
+            continue;
+          Hand h1;
+          Card c1{kTwo, kHearts};
+          Card c2{kTwo, kClubs};
+          Card c3{kThree, kClubs};
+          Card c4{kFour, kClubs};
+          Card c5{kFive, kClubs};
+
+          h1.add_card(c1);
+          h1.add_card(c2);
+          h1.add_card(c3);
+          h1.add_card(c4);
+          h1.add_card(c5);
+
+          Hand h2;
+          Card b1{v1, kDiamonds};
+          Card b2{v1, kSpades};
+          Card b3{v2, kSpades};
+          Card b4{v3, kSpades};
+          Card b5{v4, kSpades};
+
+          h2.add_card(b1);
+          h2.add_card(b2);
+          h2.add_card(b3);
+          h2.add_card(b4);
+          h2.add_card(b5);
+
+          EXPECT_LT(h1.rank(), h2.rank());
+        }
+      }
+    }
+  }
+}
+TEST(HandTest, testCompareFull) {
+  Hand h1;
+  Card c1{kKing, kHearts};
+  Card c2{kKing, kClubs};
+  Card c3{kKing, kDiamonds};
+  Card c4{kAce, kClubs};
+  Card c5{kAce, kDiamonds};
+
+  h1.add_card(c1);
+  h1.add_card(c2);
+  h1.add_card(c3);
+  h1.add_card(c4);
+  h1.add_card(c5);
+  Hand h2;
+  Card b1{kAce, kHearts};
+  Card b2{kAce, kClubs};
+  Card b3{kAce, kDiamonds};
+  Card b4{kKing, kClubs};
+  Card b5{kKing, kDiamonds};
+
+  h2.add_card(b1);
+  h2.add_card(b2);
+  h2.add_card(b3);
+  h2.add_card(b4);
+  h2.add_card(b5);
+  EXPECT_LT(h2.rank(), h1.rank());
+}
+TEST(HandTest, testCompareTwo) {
+  Hand h1;
+  Card c1{kKing, kHearts};
+  Card c2{kKing, kClubs};
+  Card c3{kAce, kClubs};
+  Card c4{kAce, kDiamonds};
+  Card c5{kTen, kDiamonds};
+
+  h1.add_card(c1);
+  h1.add_card(c2);
+  h1.add_card(c3);
+  h1.add_card(c4);
+  h1.add_card(c5);
+  Hand h2;
+  Card c6{kNine, kDiamonds};
+
+  h2.add_card(c1);
+  h2.add_card(c2);
+  h2.add_card(c3);
+  h2.add_card(c4);
+  h2.add_card(c6);
+  EXPECT_LT(h1.rank(), h2.rank());
+}
+TEST(HandTest, testCompareAceHighCard) {
+  Hand h1;
+  Card c1{kAce, kHearts};
+  Card c2{kTwo, kClubs};
+  Card c3{kThree, kClubs};
+  Card c4{kFour, kClubs};
+  Card c5{kSix, kClubs};
+
+  h1.add_card(c1);
+  h1.add_card(c2);
+  h1.add_card(c3);
+  h1.add_card(c4);
+  h1.add_card(c5);
+  for (uint a = 0; a < 12; a++) {
+    for (uint b = a + 1; b < 12; b++) {
+      for (uint c = b + 1; c < 12; c++) {
+        for (uint d = c + 1; d < 12; d++) {
+          for (uint e = d + 2; e < 12; e++) {
+            Hand h2;
+            Card b1{kValues[a], kDiamonds};
+            Card b2{kValues[b], kSpades};
+            Card b3{kValues[c], kSpades};
+            Card b4{kValues[d], kSpades};
+            Card b5{kValues[e], kSpades};
+
+            h2.add_card(b1);
+            h2.add_card(b2);
+            h2.add_card(b3);
+            h2.add_card(b4);
+            h2.add_card(b5);
+
+            EXPECT_LT(h1, h2);
+          }
+        }
+      }
+    }
+  }
 }

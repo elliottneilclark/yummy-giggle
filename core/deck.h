@@ -7,15 +7,15 @@
 
 namespace yg {
 class Deck {
- public:
+public:
   Deck();
   void remove(Card c);
   void shuffle();
   Card &take();
   bool has_more();
 
- private:
+private:
   int next_card_ = 0;
   std::array<Card, 52> cards_ = {};
 };
-}  // namespace yg
+} // namespace yg

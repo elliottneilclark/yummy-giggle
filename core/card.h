@@ -34,7 +34,7 @@ const std::array<uint8_t, 4> kSuits{kHearts, kDiamonds, kSpades, kClubs};
 const std::array<std::string, 4> kSuitStrings{"h", "d", "s", "c"};
 
 class Card {
- public:
+public:
   explicit Card(uint16_t value = kTwo, uint8_t suit = kHearts);
   uint16_t value() const { return value_; }
   uint8_t suit() const { return suit_; }
@@ -43,10 +43,10 @@ class Card {
   bool operator==(const Card &rhs) const;
   bool operator!=(const Card &rhs) const;
 
- private:
+private:
   uint16_t value_;
   uint8_t suit_;
 };
 
 std::ostream &operator<<(::std::ostream &os, const Card &card);
-}  // namespace yg
+} // namespace yg
