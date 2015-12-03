@@ -292,7 +292,7 @@ TEST(HandTest, testComparePairAces) {
           h2.add_card(b4);
           h2.add_card(b5);
 
-          EXPECT_LT(h2.rank(), h1.rank());
+          EXPECT_LT(h2, h1);
         }
       }
     }
@@ -337,7 +337,7 @@ TEST(HandTest, testComparePairLow) {
           h2.add_card(b4);
           h2.add_card(b5);
 
-          EXPECT_LT(h1.rank(), h2.rank());
+          EXPECT_LT(h1, h2);
         }
       }
     }
@@ -368,7 +368,7 @@ TEST(HandTest, testCompareFull) {
   h2.add_card(b3);
   h2.add_card(b4);
   h2.add_card(b5);
-  EXPECT_LT(h2.rank(), h1.rank());
+  EXPECT_LT(h2, h1);
 }
 TEST(HandTest, testCompareTwo) {
   Hand h1;
@@ -391,7 +391,7 @@ TEST(HandTest, testCompareTwo) {
   h2.add_card(c3);
   h2.add_card(c4);
   h2.add_card(c6);
-  EXPECT_LT(h1.rank(), h2.rank());
+  EXPECT_LT(h1, h2);
 }
 TEST(HandTest, testCompareAceHighCard) {
   Hand h1;
