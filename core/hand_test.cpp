@@ -14,19 +14,8 @@ TEST(HandTest, testAddCard) {
 
   for (int i = 0; i < 5; i++) {
     h.add_card(d.take());
+    EXPECT_EQ(i + 1, h.size());
   }
-
-  EXPECT_EQ(5, h.size());
-}
-
-TEST(HandTest, testIsFlush) {
-  Hand h;
-  Deck d;
-
-  for (int i = 0; i < 5; i++) {
-    h.add_card(d.take());
-  }
-  EXPECT_TRUE(h.is_flush());
 }
 
 TEST(HandTest, testHighStraightFlush) {
@@ -430,4 +419,21 @@ TEST(HandTest, testCompareAceHighCard) {
       }
     }
   }
+}
+TEST(HandTest, testCompareFour) {
+  Hand h1;
+  Hand h2;
+
+  h1.add_card({kAce, kHearts});
+  h1.add_card({kAce, kDiamonds});
+  h1.add_card({kAce, kSpades});
+  h1.add_card({kAce, kClubs});
+  h1.add_card({kKing, kClubs});
+  h2.add_card({kAce, kHearts});
+  h2.add_card({kAce, kDiamonds});
+  h2.add_card({kAce, kSpades});
+  h2.add_card({kAce, kClubs});
+  h2.add_card({kQueen, kClubs});
+
+  EXPECT_LT(h1, h2);
 }

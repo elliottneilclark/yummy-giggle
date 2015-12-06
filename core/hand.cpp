@@ -17,6 +17,7 @@ using std::ostream;
 using std::cout;
 using std::unordered_map;
 using std::array;
+using std::string;
 using folly::popcount;
 
 constexpr array<int64_t, 9> kBase = {
@@ -30,10 +31,26 @@ constexpr array<int64_t, 9> kBase = {
     /* One Pair         7 = */ 1ul << 59,
     /* High Card        8 = */ 1ul << 60,
 };
+Hand::Hand() : next_slot_(0), computed_rank_(-1) {}
+
+Hand::Hand(const Hand &rhs)
+    : next_slot_(rhs.next_slot_), computed_rank_(rhs.computed_rank_),
+      cards_(rhs.cards_) {}
 
 void Hand::add_card(Card c) { cards_[next_slot_++] = c; }
 
+void Hand::remove_last() {
+  computed_rank_ = -1;
+  next_slot_--;
+}
+
 int64_t Hand::rank() const {
+  if (computed_rank_ == -1) {
+    computed_rank_ = compute_rank();
+  }
+  return computed_rank_;
+}
+int64_t Hand::compute_rank() const {
   uint16_t values = 0;
   for (auto const &c : cards_) {
     values |= c.value();
@@ -50,7 +67,7 @@ int64_t Hand::rank() const {
     int64_t hand_rank = (static_cast<int64_t>(kAce) << 1) - values;
     // If we already know its a flush then no need to count the cards.
     // Otherwise it has to be a high card only
-    return (has_flush?kBase[3]:kBase[8]) + hand_rank;
+    return (has_flush ? kBase[3] : kBase[8]) + hand_rank;
   }
 
   unordered_map<uint8_t, uint16_t> counts = count_cards();
@@ -62,7 +79,7 @@ int64_t Hand::rank() const {
   }
 
   auto three = counts.find(3);
-  if (three != counts.end()) {
+  if (UNLIKELY(three != counts.end())) {
     auto two = counts.find(2);
     uint64_t three_rank = static_cast<uint64_t>(kAce - three->second);
     if (UNLIKELY(two != counts.end())) {
@@ -127,7 +144,7 @@ int64_t Hand::straight_rank(uint16_t values, bool has_flush) const {
  */
 unordered_map<uint8_t, uint16_t> Hand::count_cards() const {
   unordered_map<uint16_t, uint8_t> c_count;
-  for (auto c : cards_) {
+  for (const auto c : cards_) {
     auto l = c_count.find(c.value());
     if (l == c_count.end()) {
       c_count[c.value()] = 1;
@@ -149,14 +166,17 @@ unordered_map<uint8_t, uint16_t> Hand::count_cards() const {
   return result;
 }
 
-bool Hand::operator<(const Hand & rhs) const {
-  return rank() < rhs.rank();
+bool Hand::operator<(const Hand &rhs) const { return rank() < rhs.rank(); }
+
+bool Hand::operator==(const Hand &rhs) const { return rank() == rhs.rank(); }
+
+string Hand::card_str() const {
+  return cards_[0].str() + cards_[1].str() + cards_[2].str() + cards_[3].str() +
+         cards_[4].str();
 }
 
 ostream &operator<<(ostream &os, const Hand &hand) {
-  return os << hand.cards_[0] << hand.cards_[1] << hand.cards_[2]
-            << hand.cards_[3] << hand.cards_[4] << "[" << hand.rank() << "]";
+  return os << hand.card_str() << "[" << hand.rank() << "]";
 }
-
 
 } // namespace yg

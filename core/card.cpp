@@ -9,6 +9,7 @@ using std::log2;
 using std::string;
 using std::ostream;
 
+Card::Card() : value_(kTwo), suit_(kHearts) {}
 Card::Card(uint16_t value, uint8_t suit) : value_(value), suit_(suit) {}
 
 string Card::str() const {

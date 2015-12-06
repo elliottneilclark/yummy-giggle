@@ -25,7 +25,8 @@ void Deck::remove(Card c) {
 }
 
 void Deck::shuffle() {
-  std::shuffle(cards_.begin() + next_card_, cards_.end(), folly::ThreadLocalPRNG());
+  std::shuffle(cards_.begin() + next_card_, cards_.end(),
+               folly::ThreadLocalPRNG());
 }
 
 bool Deck::has_more() { return next_card_ < 52; }

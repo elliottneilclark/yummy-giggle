@@ -4,15 +4,19 @@ cxx_library(
     "deck.cpp",
     "card.cpp",
     "hand.cpp",
+    "choose_hand.cpp",
   ],
   exported_headers = [
     "card.h",
     "deck.h",
     "hand.h",
+    "choose_hand.h",
   ],
   tests = [
     ":card_test",
     ":deck_test",
+    ":hand_test",
+    ":choose_hand_test",
     ":easy_test",
   ],
   deps = [
@@ -66,6 +70,15 @@ cxx_test(
   ]
 )
 cxx_test(
+  name = "choose_hand_test",
+  srcs = [
+    "choose_hand_test.cpp",
+  ],
+  deps = [
+    ":core",
+  ]
+)
+cxx_test(
   name = "easy_test",
   srcs = [
     "easy_test.cpp",
@@ -73,4 +86,10 @@ cxx_test(
   deps = [
     ":core",
   ]
+)
+zip_file(
+  name = 'zip',
+  srcs = [
+      ':rank_all',
+  ],
 )

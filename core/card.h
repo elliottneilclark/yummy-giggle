@@ -35,7 +35,8 @@ const std::array<std::string, 4> kSuitStrings{"h", "d", "s", "c"};
 
 class Card {
 public:
-  explicit Card(uint16_t value = kTwo, uint8_t suit = kHearts);
+  Card();
+  Card(uint16_t value, uint8_t suit);
   uint16_t value() const { return value_; }
   uint8_t suit() const { return suit_; }
   std::string str() const;
