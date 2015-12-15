@@ -8,6 +8,9 @@ namespace yg {
 
 using std::make_unique;
 using std::unique_ptr;
+using std::string;
+
+ChooseHand::ChooseHand() {}
 
 void ChooseHand::add_card(Card c) { cards_.push_back(c); }
 

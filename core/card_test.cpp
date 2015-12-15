@@ -33,3 +33,8 @@ TEST(CardTest, testEquals) {
   ASSERT_NE(c1, c3);
   ASSERT_NE(c1, c4);
 }
+
+TEST(CardTest, testParse) {
+  EXPECT_EQ(Card{"Qs"}, (Card{kQueen, kSpades}));
+  EXPECT_EQ(Card{"3d"}, (Card{kThree, kDiamonds}));
+}

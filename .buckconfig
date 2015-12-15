@@ -1,3 +1,3 @@
 [cxx]
   gtest_dep = //third-party:google-test
-  cxxflags = -std=c++14 -O3 -g
+  cxxflags = -std=c++14 -O3 -g -fno-omit-frame-pointer
