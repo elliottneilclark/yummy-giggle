@@ -5,18 +5,21 @@ cxx_library(
     "card.cpp",
     "hand.cpp",
     "choose_hand.cpp",
+    "choose_iter.cpp",
   ],
   exported_headers = [
     "card.h",
     "deck.h",
     "hand.h",
     "choose_hand.h",
+    "choose_iter.h",
   ],
   tests = [
     ":card_test",
     ":deck_test",
     ":hand_test",
     ":choose_hand_test",
+    ":choose_iter_test",
     ":easy_test",
   ],
   deps = [
@@ -24,7 +27,8 @@ cxx_library(
   ],
   visibility = [
     "PUBLIC",
-  ]
+  ],
+  link_style = "static",
 )
 
 cxx_binary(
@@ -39,7 +43,8 @@ cxx_binary(
   ],
   visibility = [
     "PUBLIC",
-  ]
+  ],
+  link_style = "static",
 )
 
 cxx_test(
@@ -73,6 +78,15 @@ cxx_test(
   name = "choose_hand_test",
   srcs = [
     "choose_hand_test.cpp",
+  ],
+  deps = [
+    ":core",
+  ]
+)
+cxx_test(
+  name = "choose_iter_test",
+  srcs = [
+    "choose_iter_test.cpp",
   ],
   deps = [
     ":core",

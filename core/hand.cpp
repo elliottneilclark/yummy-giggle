@@ -39,6 +39,11 @@ Hand::Hand(const Hand &rhs)
 
 void Hand::add_card(Card c) { cards_[next_slot_++] = c; }
 
+void Hand::clear() {
+  computed_rank_ = -1;
+  next_slot_ = 0;
+}
+
 void Hand::remove_last() {
   computed_rank_ = -1;
   next_slot_--;

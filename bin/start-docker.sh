@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 eval "$(docker-machine env docker-vm)"
+eval "$(docker-machine env dinghy)"
 
 mkdir -p third-party || true
 if [[ ! -d third-party/googletest ]]; then

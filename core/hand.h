@@ -16,6 +16,7 @@ public:
   Hand(const Hand &rhs);
   void add_card(Card c);
   void remove_last();
+  void clear();
   int64_t rank() const;
   int size() const { return next_slot_; }
   friend std::ostream &operator<<(::std::ostream &os, const Hand &hand);

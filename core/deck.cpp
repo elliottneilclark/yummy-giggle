@@ -29,6 +29,6 @@ void Deck::shuffle() {
                folly::ThreadLocalPRNG());
 }
 
-bool Deck::has_more() { return next_card_ < 52; }
+bool Deck::has_more() const { return next_card_ < 52; }
 Card &Deck::take() { return cards_[next_card_++]; }
 } // namespace yg
