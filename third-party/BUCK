@@ -11,6 +11,7 @@ def add_system_libs(names = [], lib_dir = "/usr/lib/x86_64-linux-gnu", deps = []
               name = name,
               lib_name = name,
               lib_dir = '$(location :{})'.format(gen_rule_name),
+	      force_static = True,
               deps = deps,
               visibility = [ 'PUBLIC' ],
               exported_linker_flags = exported_linker_flags,
