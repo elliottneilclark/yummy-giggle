@@ -23,9 +23,9 @@ public:
 
 private:
   const unsigned int n_;
-  std::vector<Card> cards_;
   mutable std::vector<Card> result_;
   std::vector<unsigned int> idx_;
+  std::vector<Card> cards_;
   bool has_more_;
 };
 } // namespace yg

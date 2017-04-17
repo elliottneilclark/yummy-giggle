@@ -1,7 +1,6 @@
 #include "core/choose_iter.h"
 
 #include "gtest/gtest.h"
-#include <folly/Logging.h>
 
 using namespace yg;
 using namespace std;

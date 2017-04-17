@@ -1,17 +1,15 @@
 #include <array>
-#include <iostream>
-#include <folly/Benchmark.h>
 #include <ctime>
+#include <iostream>
 #include <vector>
 
 #include "core/card.h"
-#include "core/hand.h"
-#include "core/deck.h"
 #include "core/choose_hand.h"
 #include "core/choose_iter.h"
+#include "core/deck.h"
+#include "core/hand.h"
 
 using namespace yg;
-using namespace folly;
 using namespace std;
 
 int64_t rankFive(const array<Card, 52> &cards) {
@@ -66,12 +64,8 @@ array<Card, 52> make_cards() {
   return cards;
 }
 
-BENCHMARK(rankFive) { doNotOptimizeAway(rankFive(make_cards())); }
-BENCHMARK_RELATIVE(rankFiveIter) { doNotOptimizeAway(rankFiveIter(Deck{})); }
-
 int main(int argc, char *argv[]) {
   gflags::ParseCommandLineFlags(&argc, &argv, true);
 
-  runBenchmarks();
   return 0;
 }

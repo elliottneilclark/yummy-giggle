@@ -2,9 +2,6 @@
 
 #include <limits>
 
-#include "folly/Logging.h"
-#include "folly/Likely.h"
-
 namespace yg {
 
 ChooseIter::ChooseIter()
@@ -46,7 +43,7 @@ ChooseIter &ChooseIter::operator++() {
 
       // If we were already at the last level then
       // just give up and bail out.
-      if (UNLIKELY(level == 0)) {
+      if (level == 0) {
         has_more_ = false;
         return *this;
       }

@@ -1,6 +1,6 @@
 #include "core/deck.h"
+#include <random>
 #include <algorithm>
-#include "folly/Random.h"
 
 namespace yg {
 Deck::Deck() {
@@ -25,8 +25,8 @@ void Deck::remove(Card c) {
 }
 
 void Deck::shuffle() {
-  std::shuffle(cards_.begin() + next_card_, cards_.end(),
-               folly::ThreadLocalPRNG());
+  static thread_local std::mt19937 generator;
+  std::shuffle(cards_.begin() + next_card_, cards_.end(), generator);
 }
 
 bool Deck::has_more() const { return next_card_ < 52; }

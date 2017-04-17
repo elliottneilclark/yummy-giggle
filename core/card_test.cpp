@@ -1,21 +1,21 @@
-#include "gtest/gtest.h"
 #include "core/card.h"
+#include "gtest/gtest.h"
 
 using namespace yg;
 
 TEST(CardTest, testGetValue) {
-  Card c{kThree, kClubs};
+  auto c = Card{kThree, kClubs};
   EXPECT_EQ(c.value(), 1 << 1);
 }
 
 TEST(CardTest, testGetSuit) {
-  Card c{kThree, kClubs};
+  auto c = Card{kThree, kClubs};
   EXPECT_EQ(c.suit(), 8);
 
-  Card c2{kFour, kHearts};
+  auto c2 = Card{kFour, kHearts};
   EXPECT_EQ(c2.suit(), 1);
 
-  Card c3{kFive, kDiamonds};
+  auto c3 = Card{kFive, kDiamonds};
   EXPECT_EQ(c3.suit(), 2);
 }
 
