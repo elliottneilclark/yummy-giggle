@@ -74,4 +74,4 @@ bool ChooseIter::operator==(const ChooseIter &rhs) {
 bool ChooseIter::operator!=(const ChooseIter &rhs) {
   return has_more() != rhs.has_more();
 }
-} // namespace yg
+}  // namespace yg

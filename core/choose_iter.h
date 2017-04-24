@@ -9,7 +9,7 @@
 namespace yg {
 class ChooseIter
     : public std::iterator<std::input_iterator_tag, const std::vector<Card>> {
-public:
+ public:
   ChooseIter();
   ChooseIter(const Deck &, unsigned int);
   bool has_more() const;
@@ -21,11 +21,11 @@ public:
   bool operator==(const ChooseIter &);
   bool operator!=(const ChooseIter &);
 
-private:
+ private:
   const unsigned int n_;
   mutable std::vector<Card> result_;
   std::vector<unsigned int> idx_;
   std::vector<Card> cards_;
   bool has_more_;
 };
-} // namespace yg
+}  // namespace yg

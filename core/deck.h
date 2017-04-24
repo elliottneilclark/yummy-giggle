@@ -7,7 +7,7 @@
 
 namespace yg {
 class Deck {
-public:
+ public:
   Deck();
   void remove(Card c);
   void shuffle();
@@ -16,8 +16,8 @@ public:
   const std::array<Card, 52> &cards() const { return cards_; }
   int next_card() const { return next_card_; }
 
-private:
+ private:
   int next_card_ = 0;
   std::array<Card, 52> cards_ = {};
 };
-} // namespace yg
+}  // namespace yg

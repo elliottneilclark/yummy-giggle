@@ -5,18 +5,18 @@ using namespace yg;
 
 TEST(CardTest, testGetValue) {
   auto c = Card{kThree, kClubs};
-  EXPECT_EQ(c.value(), 1 << 1);
+  EXPECT_EQ(c.value(), 1);
 }
 
 TEST(CardTest, testGetSuit) {
   auto c = Card{kThree, kClubs};
-  EXPECT_EQ(c.suit(), 8);
+  EXPECT_EQ(c.suit(), 3);
 
   auto c2 = Card{kFour, kHearts};
-  EXPECT_EQ(c2.suit(), 1);
+  EXPECT_EQ(c2.suit(), 0);
 
   auto c3 = Card{kFive, kDiamonds};
-  EXPECT_EQ(c3.suit(), 2);
+  EXPECT_EQ(c3.suit(), 1);
 }
 
 TEST(CardTest, testStr) {

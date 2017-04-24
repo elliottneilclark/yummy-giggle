@@ -1,7 +1,7 @@
 #include "core/hand.h"
+#include <iostream>
 #include "core/deck.h"
 #include "gtest/gtest.h"
-#include <iostream>
 
 using namespace yg;
 using namespace std;
@@ -32,8 +32,8 @@ TEST(HandTest, testHighStraightFlush) {
   h.add_card(c4);
   h.add_card(c5);
 
- // EXPECT_LT(h.rank(), 10);
- // EXPECT_EQ(h.rank(), 0);
+  // EXPECT_LT(h.rank(), 10);
+  // EXPECT_EQ(h.rank(), 0);
 }
 
 TEST(HandTest, testLowStraightFlush) {
@@ -50,7 +50,7 @@ TEST(HandTest, testLowStraightFlush) {
   h.add_card(c4);
   h.add_card(c5);
 
-//  EXPECT_EQ(h.rank(), 8);
+  //  EXPECT_EQ(h.rank(), 8);
 }
 TEST(HandTest, testWheelStraightFlush) {
   Hand h;
@@ -66,8 +66,8 @@ TEST(HandTest, testWheelStraightFlush) {
   h.add_card(c4);
   h.add_card(c5);
 
-//  EXPECT_LT(h.rank(), 10);
-//  EXPECT_EQ(h.rank(), 9);
+  //  EXPECT_LT(h.rank(), 10);
+  //  EXPECT_EQ(h.rank(), 9);
 }
 TEST(HandTest, testWheelStraight) {
   Hand h;
@@ -83,8 +83,8 @@ TEST(HandTest, testWheelStraight) {
   h.add_card(c4);
   h.add_card(c5);
 
-//  EXPECT_GE(h.rank(), 1l << 56);
-//  EXPECT_LT(h.rank(), 1l << 57);
+  //  EXPECT_GE(h.rank(), 1l << 56);
+  //  EXPECT_LT(h.rank(), 1l << 57);
 }
 
 TEST(HandTest, testFlush) {
@@ -101,14 +101,13 @@ TEST(HandTest, testFlush) {
   h.add_card(c4);
   h.add_card(c5);
 
-//  EXPECT_GE(h.rank(), 1l << 55);
-//  EXPECT_LT(h.rank(), 1l << 56);
+  //  EXPECT_GE(h.rank(), 1l << 55);
+  //  EXPECT_LT(h.rank(), 1l << 56);
 }
 TEST(HandTest, testFour) {
   for (uint16_t v1 : kValues) {
     for (uint16_t v2 : kValues) {
-      if (v1 == v2)
-        continue;
+      if (v1 == v2) continue;
       Hand h;
       Card c1{v1, kHearts};
       Card c2{v1, kClubs};
@@ -122,16 +121,15 @@ TEST(HandTest, testFour) {
       h.add_card(c4);
       h.add_card(c5);
 
-//      EXPECT_GE(h.rank(), 1l << 53);
-//      EXPECT_LT(h.rank(), 1l << 54);
+      //      EXPECT_GE(h.rank(), 1l << 53);
+      //      EXPECT_LT(h.rank(), 1l << 54);
     }
   }
 }
 TEST(HandTest, testFull) {
   for (uint16_t v1 : kValues) {
     for (uint16_t v2 : kValues) {
-      if (v1 == v2)
-        continue;
+      if (v1 == v2) continue;
       Hand h;
       Card c1{v1, kHearts};
       Card c2{v1, kClubs};
@@ -145,19 +143,17 @@ TEST(HandTest, testFull) {
       h.add_card(c4);
       h.add_card(c5);
 
-//      EXPECT_GE(h.rank(), 1l << 54);
-//      EXPECT_LT(h.rank(), 1l << 55);
+      //      EXPECT_GE(h.rank(), 1l << 54);
+      //      EXPECT_LT(h.rank(), 1l << 55);
     }
   }
 }
 TEST(HandTest, testThree) {
   for (uint16_t v1 : kValues) {
     for (uint16_t v2 : kValues) {
-      if (v1 == v2)
-        continue;
+      if (v1 == v2) continue;
       for (uint16_t v3 : kValues) {
-        if (v1 == v3 || v2 == v3)
-          continue;
+        if (v1 == v3 || v2 == v3) continue;
         Hand h;
         Card c1{v1, kHearts};
         Card c2{v1, kClubs};
@@ -171,8 +167,8 @@ TEST(HandTest, testThree) {
         h.add_card(c4);
         h.add_card(c5);
 
-//        EXPECT_GE(h.rank(), 1l << 57);
-//        EXPECT_LT(h.rank(), 1l << 58);
+        //        EXPECT_GE(h.rank(), 1l << 57);
+        //        EXPECT_LT(h.rank(), 1l << 58);
       }
     }
   }
@@ -180,11 +176,9 @@ TEST(HandTest, testThree) {
 TEST(HandTest, testTwoPair) {
   for (uint16_t v1 : kValues) {
     for (uint16_t v2 : kValues) {
-      if (v1 == v2)
-        continue;
+      if (v1 == v2) continue;
       for (uint16_t v3 : kValues) {
-        if (v1 == v3 || v2 == v3)
-          continue;
+        if (v1 == v3 || v2 == v3) continue;
         Hand h;
         Card c1{v1, kHearts};
         Card c2{v1, kClubs};
@@ -198,8 +192,8 @@ TEST(HandTest, testTwoPair) {
         h.add_card(c4);
         h.add_card(c5);
 
-//        EXPECT_GE(h.rank(), 1l << 58);
-//        EXPECT_LT(h.rank(), 1l << 59);
+        //        EXPECT_GE(h.rank(), 1l << 58);
+        //        EXPECT_LT(h.rank(), 1l << 59);
       }
     }
   }
@@ -220,8 +214,8 @@ TEST(HandTest, testPair) {
     h.add_card(c4);
     h.add_card(c5);
 
-//    EXPECT_GE(h.rank(), 1l << 59);
-//    EXPECT_LT(h.rank(), 1l << 60);
+    //    EXPECT_GE(h.rank(), 1l << 59);
+    //    EXPECT_LT(h.rank(), 1l << 60);
   }
 }
 TEST(HandTest, testHighCard) {
@@ -238,23 +232,19 @@ TEST(HandTest, testHighCard) {
   h.add_card(c4);
   h.add_card(c5);
 
-  //EXPECT_GE(h.rank(), 1l << 60);
-  //EXPECT_LT(h.rank(), 1l << 61);
+  // EXPECT_GE(h.rank(), 1l << 60);
+  // EXPECT_LT(h.rank(), 1l << 61);
 }
 
 TEST(HandTest, testComparePairAces) {
   for (uint16_t v1 : kValues) {
-    if (v1 == kAce)
-      continue;
+    if (v1 == kAce) continue;
     for (uint16_t v2 : kValues) {
-      if (v1 == v2)
-        continue;
+      if (v1 == v2) continue;
       for (uint16_t v3 : kValues) {
-        if (v3 == v1 || v3 == v3)
-          continue;
+        if (v3 == v1 || v3 == v3) continue;
         for (uint16_t v4 : kValues) {
-          if (v4 == v1 || v4 == v2 || v4 == v3)
-            continue;
+          if (v4 == v1 || v4 == v2 || v4 == v3) continue;
           Hand h1;
           Card c1{kAce, kHearts};
           Card c2{kAce, kClubs};
@@ -289,17 +279,13 @@ TEST(HandTest, testComparePairAces) {
 }
 TEST(HandTest, testComparePairLow) {
   for (uint16_t v1 : kValues) {
-    if (v1 == kTwo)
-      continue;
+    if (v1 == kTwo) continue;
     for (uint16_t v2 : kValues) {
-      if (v1 == v2)
-        continue;
+      if (v1 == v2) continue;
       for (uint16_t v3 : kValues) {
-        if (v3 == v1 || v3 == v3)
-          continue;
+        if (v3 == v1 || v3 == v3) continue;
         for (uint16_t v4 : kValues) {
-          if (v4 == v1 || v4 == v2 || v4 == v3)
-            continue;
+          if (v4 == v1 || v4 == v2 || v4 == v3) continue;
           Hand h1;
           Card c1{kTwo, kHearts};
           Card c2{kTwo, kClubs};
@@ -357,7 +343,7 @@ TEST(HandTest, testCompareFull) {
   h2.add_card(b3);
   h2.add_card(b4);
   h2.add_card(b5);
-  //EXPECT_LT(h2, h1);
+  // EXPECT_LT(h2, h1);
 }
 TEST(HandTest, testCompareTwo) {
   Hand h1;
@@ -380,7 +366,7 @@ TEST(HandTest, testCompareTwo) {
   h2.add_card(c3);
   h2.add_card(c4);
   h2.add_card(c6);
-  //EXPECT_LT(h1, h2);
+  // EXPECT_LT(h1, h2);
 }
 TEST(HandTest, testCompareAceHighCard) {
   Hand h1;
@@ -413,7 +399,7 @@ TEST(HandTest, testCompareAceHighCard) {
             h2.add_card(b4);
             h2.add_card(b5);
 
-            //EXPECT_LT(h1, h2);
+            // EXPECT_LT(h1, h2);
           }
         }
       }
@@ -435,5 +421,5 @@ TEST(HandTest, testCompareFour) {
   h2.add_card({kAce, kClubs});
   h2.add_card({kQueen, kClubs});
 
-  //EXPECT_LT(h1, h2);
+  // EXPECT_LT(h1, h2);
 }

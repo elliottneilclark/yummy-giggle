@@ -25,6 +25,7 @@ constexpr auto kThreeOfAKind = 1ul << 58;
 constexpr auto kTwoPair = 1ul << 57;
 constexpr auto kOnePair = 1ul << 56;
 constexpr auto kHighCard = 1ul << 55;
+
 Hand::Hand() : cards_(), computed_rank_(-1) {}
 
 Hand::Hand(const Hand &rhs)
@@ -37,14 +38,14 @@ void Hand::clear() {
   cards_.clear();
 }
 
-int64_t Hand::rank() const {
-  if (computed_rank_ == -1) {
+uint64_t Hand::rank() const {
+  if (computed_rank_) {
     computed_rank_ = compute_rank();
   }
-  return computed_rank_;
+  return *computed_rank_;
 }
 
-int64_t Hand::compute_rank() const { return Bits::popcnt(uint32_t{0}); }
+uint64_t Hand::compute_rank() const { return Bits::popcnt(uint32_t{0}); }
 
 bool Hand::operator<(const Hand &rhs) const { return rank() < rhs.rank(); }
 
@@ -59,4 +60,4 @@ ostream &operator<<(ostream &os, const Hand &hand) {
   return os << hand.card_str() << "[" << hand.rank() << "]";
 }
 
-} // namespace yg
+}  // namespace yg
