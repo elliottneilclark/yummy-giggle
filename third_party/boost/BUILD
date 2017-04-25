@@ -21,7 +21,7 @@ genrule(
         'tar xfz ' + package_file,
         'cd ' + package_dir,
         './bootstrap.sh',
-        './b2 -a -j4 -q cxxflags="-std=c++14 -fPIC -g" link=static --reconfigure --without-python --without-mpi --prefix="$$INSTALL_DIR" install',
+        './b2 -a -j2 -q cxxflags="-std=c++14 -msse -msse2 -msse3 -fPIC -g" link=static --reconfigure --without-python --without-mpi --prefix="$$INSTALL_DIR" install',
         'rm -rf $$TMP_DIR',
     ]), )
 

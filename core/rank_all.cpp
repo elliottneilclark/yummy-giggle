@@ -14,7 +14,7 @@ using namespace std;
 
 int64_t rankFive(const array<Card, 52> &cards) {
   Hand h;
-  int64_t best_rank = 1l << 22;
+  int64_t best_rank = 0;
   for (uint a = 0; a < 52; a++) {
     h.add_card(cards[a]);
     for (uint b = a + 1; b < 52; b++) {
@@ -25,16 +25,16 @@ int64_t rankFive(const array<Card, 52> &cards) {
           h.add_card(cards[d]);
           for (uint e = d + 1; e < 52; e++) {
             h.add_card(cards[e]);
-            best_rank = min(best_rank, h.rank());
-            h.remove_last();
+            best_rank = max(best_rank, h.Rank());
+            h.RemoveLast();
           }
-          h.remove_last();
+          h.RemoveLast();
         }
-        h.remove_last();
+        h.RemoveLast();
       }
-      h.remove_last();
+      h.RemoveLast();
     }
-    h.remove_last();
+    h.Remove_last();
   }
   return best_rank;
 }
@@ -48,7 +48,7 @@ int64_t rankFiveIter(const Deck d) {
     for (const Card &c : cards) {
       h.add_card(c);
     }
-    best_rank = min(best_rank, h.rank());
+    best_rank = min(best_rank, h.Rank());
   }
   return best_rank;
 }

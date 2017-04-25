@@ -27,6 +27,17 @@ class Bits {
   static std::uint8_t clz(std::uint64_t x) { return clz_impl(clz_tag{}, x); }
   static std::uint8_t ilog2(uint64_t x) { return x ? 64 - clz(x) - 1 : 0; }
 
+  static std::uint64_t KeepHighest(std::uint64_t x) {
+    return 1 << (64 - clz(x) - 1);
+  }
+
+  static std::uint64_t KeepNHighest(std::uint64_t x, uint8_t to_keep) {
+    while (popcnt(x) > to_keep) {
+      x &= x - 1;
+    }
+    return x;
+  }
+
  private:
   Bits() {}
 
