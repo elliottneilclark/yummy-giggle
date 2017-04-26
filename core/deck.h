@@ -1,7 +1,8 @@
 #pragma once
 
-#include <array>
 #include <cstdint>
+#include <unordered_set>
+#include <vector>
 
 #include "core/card.h"
 
@@ -9,15 +10,10 @@ namespace yg {
 class Deck {
  public:
   Deck();
-  void remove(Card c);
-  void shuffle();
-  Card &take();
-  bool has_more() const;
-  const std::array<Card, 52> &cards() const { return cards_; }
-  int next_card() const { return next_card_; }
+  void Remove(const Card& c);
+  std::vector<Card> Cards() const;
 
  private:
-  int next_card_ = 0;
-  std::array<Card, 52> cards_ = {};
+  std::unordered_set<Card> cards_ = {};
 };
 }  // namespace yg

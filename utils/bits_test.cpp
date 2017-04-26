@@ -18,3 +18,10 @@ TEST(TestBits, testCLZ) {
   EXPECT_EQ(31, Bits::clz(std::uint32_t{1}));
   EXPECT_EQ(63, Bits::clz(std::uint64_t{1}));
 }
+
+TEST(TestBits, testKeepN) {
+  auto in = 1 << 13 | 1 << 12 | 1 << 11 | 1 << 10 | 1 << 9 | 1 << 8;
+
+  EXPECT_EQ(1 << 13 | 1 << 12, Bits::KeepNHighest(in, 2));
+  EXPECT_EQ(3, Bits::popcnt(Bits::KeepNHighest(in, 3)));
+}

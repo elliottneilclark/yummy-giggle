@@ -130,7 +130,10 @@ base_libs = [
     "filesystem",
 ]
 
-added = ["current_function", "type", "version", "none", "none_t"]
+added = [
+    "current_function", "type", "version", "none", "none_t", "limits",
+    "integer_fwd", "cstdint"
+]
 
 base_dir = sys.argv[1]
 lib_dir = join(base_dir, 'lib')

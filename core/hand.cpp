@@ -1,9 +1,12 @@
 #include "core/hand.h"
 
+#include <bitset>
 #include <cmath>
 #include <cstdint>
 #include <iostream>
 #include <string>
+
+#include <glog/logging.h>
 
 #include "utils/bits.h"
 
@@ -98,7 +101,7 @@ uint64_t Hand::ComputeRank() const {
     auto card = count_to_vmap[4];
     auto other = Bits::KeepHighest(vmap ^ count_to_vmap[4]);
     return kFourOfAKind | card << 13 | other;
-  } else if (count_to_vmap[3] != 0 && Bits::popcnt(count_to_vmap[3]) == 2) {
+  } else if (count_to_vmap[3] != 0 && Bits::popcnt(count_to_vmap[3]) >= 2) {
     // If we have two sets then a full house is the best we can do.
     auto set_card = Bits::KeepHighest(count_to_vmap[3]);
     auto pair = count_to_vmap[3] ^ set_card;
@@ -107,7 +110,8 @@ uint64_t Hand::ComputeRank() const {
     // This is the normal full house.
     // Keep the set
     // Then keep the highest pair.
-    return kFullHouse | count_to_vmap[3] | Bits::KeepHighest(count_to_vmap[2]);
+    return kFullHouse | count_to_vmap[3] << 13 |
+           Bits::KeepHighest(count_to_vmap[2]);
   } else if (auto straight_rank = RankStraight(vmap)) {
     // This is a straight.
     return kStraight | *straight_rank;
@@ -125,7 +129,8 @@ uint64_t Hand::ComputeRank() const {
       // Keep the two highest pair
       // Keep the highest other card.
       auto two_pair = Bits::KeepNHighest(count_to_vmap[2], 2);
-      return kTwoPair | two_pair << 13 | Bits::KeepHighest(vmap ^ two_pair);
+      auto other = Bits::KeepHighest(vmap ^ two_pair);
+      return kTwoPair | two_pair << 13 | other;
     } else {
       return kOnePair | count_to_vmap[2] << 13 |
              Bits::KeepNHighest(vmap ^ count_to_vmap[2], 3);
@@ -135,7 +140,9 @@ uint64_t Hand::ComputeRank() const {
 }
 
 bool Hand::operator<(const Hand &rhs) const { return Rank() < rhs.Rank(); }
-
+bool Hand::operator<=(const Hand &rhs) const { return Rank() <= rhs.Rank(); }
+bool Hand::operator>(const Hand &rhs) const { return Rank() > rhs.Rank(); }
+bool Hand::operator>=(const Hand &rhs) const { return Rank() >= rhs.Rank(); }
 bool Hand::operator==(const Hand &rhs) const { return Rank() == rhs.Rank(); }
 
 string Hand::str() const {

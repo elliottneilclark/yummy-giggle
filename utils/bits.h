@@ -32,10 +32,11 @@ class Bits {
   }
 
   static std::uint64_t KeepNHighest(std::uint64_t x, uint8_t to_keep) {
-    while (popcnt(x) > to_keep) {
-      x &= x - 1;
+    auto result = x;
+    while (popcnt(result) > to_keep) {
+      result = result & (result - 1);
     }
-    return x;
+    return result;
   }
 
  private:
@@ -48,6 +49,9 @@ class Bits {
   template <typename T, typename = typename std::enable_if<
                             sizeof(T) <= sizeof(unsigned int)>::type>
   static std::uint8_t clz_impl(clz_tag, T x) {
+    if (!x) {
+      return sizeof(T) * CHAR_BIT;
+    }
     return __builtin_clz(x) -
            (sizeof(unsigned int) * CHAR_BIT - sizeof(T) * CHAR_BIT);
   }
@@ -55,6 +59,9 @@ class Bits {
   template <typename T, typename = typename std::enable_if<
                             sizeof(T) <= sizeof(unsigned long)>::type>
   static std::uint8_t clz_impl(clzl_tag, T x) {
+    if (!x) {
+      return sizeof(T) * CHAR_BIT;
+    }
     return __builtin_clzl(x) -
            (sizeof(unsigned long) * CHAR_BIT - sizeof(T) * CHAR_BIT);
   }
@@ -62,6 +69,9 @@ class Bits {
   template <typename T, typename = typename std::enable_if<
                             sizeof(T) <= sizeof(unsigned long long)>::type>
   static std::uint8_t clz_impl(clzll_tag, T x) {
+    if (!x) {
+      return sizeof(T) * CHAR_BIT;
+    }
     return __builtin_clzll(x) -
            (sizeof(unsigned long long) * CHAR_BIT - sizeof(T) * CHAR_BIT);
   }

@@ -70,6 +70,7 @@ cc_library(
     srcs=["empty.cc"] + lib_files,
     deps=[
         "//third_party/gflags:gflags-cxx",
+        "//third_party/libunwind:libunwind-cxx",
     ],
     hdrs=include_files,
     includes=[

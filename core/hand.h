@@ -21,6 +21,9 @@ class Hand {
   int size() const { return cards_.size(); }
   friend std::ostream &operator<<(::std::ostream &os, const Hand &hand);
   bool operator<(const Hand &rhs) const;
+  bool operator>(const Hand &rhs) const;
+  bool operator<=(const Hand &rhs) const;
+  bool operator>=(const Hand &rhs) const;
   bool operator==(const Hand &rhs) const;
 
  private:

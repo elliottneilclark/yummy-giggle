@@ -2,7 +2,10 @@ cc_library(
     name="card",
     srcs=["card.cpp"],
     hdrs=["card.h"],
-    deps=["//third_party/glog:glog-cxx", "//utils:bits"], )
+    deps=[
+        "//third_party/glog:glog-cxx", "//utils:bits",
+        "//third_party/boost:functional-cxx"
+    ], )
 cc_test(
     name="card_test",
     srcs=["card_test.cpp"],

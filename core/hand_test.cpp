@@ -10,10 +10,10 @@ TEST(HandTest, testAddCard) {
   Hand h;
   Deck d;
 
-  d.shuffle();
+  auto cards = d.Cards();
 
   for (int i = 0; i < 5; i++) {
-    h.AddCard(d.take());
+    h.AddCard(cards[i]);
     EXPECT_EQ(i + 1, h.size());
   }
 }
@@ -271,7 +271,7 @@ TEST(HandTest, testComparePairAces) {
           h2.AddCard(b4);
           h2.AddCard(b5);
 
-          EXPECT_LT(h2, h1);
+          EXPECT_GT(h1, h2);
         }
       }
     }
@@ -312,7 +312,7 @@ TEST(HandTest, testComparePairLow) {
           h2.AddCard(b4);
           h2.AddCard(b5);
 
-          EXPECT_LT(h1, h2);
+          EXPECT_GT(h1, h2);
         }
       }
     }
@@ -343,7 +343,7 @@ TEST(HandTest, testCompareFull) {
   h2.AddCard(b3);
   h2.AddCard(b4);
   h2.AddCard(b5);
-  // EXPECT_LT(h2, h1);
+  EXPECT_GT(h2, h1);
 }
 TEST(HandTest, testCompareTwo) {
   Hand h1;
@@ -366,7 +366,7 @@ TEST(HandTest, testCompareTwo) {
   h2.AddCard(c3);
   h2.AddCard(c4);
   h2.AddCard(c6);
-  // EXPECT_LT(h1, h2);
+  EXPECT_GT(h1, h2);
 }
 TEST(HandTest, testCompareAceHighCard) {
   Hand h1;
@@ -399,7 +399,7 @@ TEST(HandTest, testCompareAceHighCard) {
             h2.AddCard(b4);
             h2.AddCard(b5);
 
-            // EXPECT_LT(h1, h2);
+            EXPECT_GT(h1, h2);
           }
         }
       }
@@ -415,11 +415,12 @@ TEST(HandTest, testCompareFour) {
   h1.AddCard({kAce, kSpades});
   h1.AddCard({kAce, kClubs});
   h1.AddCard({kKing, kClubs});
+
   h2.AddCard({kAce, kHearts});
   h2.AddCard({kAce, kDiamonds});
   h2.AddCard({kAce, kSpades});
   h2.AddCard({kAce, kClubs});
   h2.AddCard({kQueen, kClubs});
 
-  // EXPECT_LT(h1, h2);
+  EXPECT_GT(h1, h2);
 }

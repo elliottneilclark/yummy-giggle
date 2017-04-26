@@ -11,7 +11,8 @@ using std::string;
 using std::ostream;
 
 Card::Card() : value_(kTwo), suit_(kHearts) {}
-Card::Card(uint16_t value, uint8_t suit) : value_(value), suit_(suit) {}
+Card::Card(std::uint16_t value, std::uint8_t suit)
+    : value_(value), suit_(suit) {}
 Card::Card(string s)
     : value_(kValueCharMap.at(s.at(0))), suit_(kSuitCharMap.at(s.at(1))) {}
 

@@ -21,7 +21,7 @@ genrule(
         'tar xfz ' + package_file,
         'cd ' + package_dir,
         './bootstrap.sh',
-        './b2 -a -j2 -q cxxflags="-std=c++14 -msse -msse2 -msse3 -fPIC -g" link=static --reconfigure --without-python --without-mpi --prefix="$$INSTALL_DIR" install',
+        './b2 -a -q cxxflags="-std=c++14 -msse -msse2 -msse3 -fPIC -g" link=static --reconfigure --without-python --without-mpi --prefix="$$INSTALL_DIR" install',
         'rm -rf $$TMP_DIR',
     ]), )
 
@@ -68,7 +68,10 @@ boost_library(
     name="date_time-cxx", )
 
 boost_library(
-    name="detail-cxx", )
+    name="detail-cxx",
+    deps=[
+        ":assert-cxx",
+    ], )
 
 boost_library(
     name="exception-cxx", )
@@ -102,7 +105,16 @@ boost_library(
     name="functional-cxx",
     deps=[
         ":detail-cxx",
+        ":config-cxx",
+        ":limits-cxx",
+        ":utility-cxx",
+        ":core-cxx",
+        ":integer-cxx",
+        ":type_traits-cxx",
     ], )
+
+boost_library(
+    name="limits-cxx", )
 
 boost_library(
     name="heap-cxx",
@@ -112,7 +124,9 @@ boost_library(
 
 boost_library(
     name="integer-cxx",
-    deps=[":static_assert-cxx"], )
+    deps=[":static_assert-cxx", ":integer_fwd-cxx", ":cstdint-cxx"], )
+boost_library(name="integer_fwd-cxx")
+boost_library(name="cstdint-cxx")
 
 boost_library(
     name="iterator-cxx",
@@ -254,6 +268,7 @@ boost_library(
         ":mpl-cxx",
         ":utility-cxx",
         ":static_assert-cxx",
+        ":version-cxx",
     ])
 
 boost_library(
