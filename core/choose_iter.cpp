@@ -2,22 +2,13 @@
 
 #include <limits>
 
-#include "folly/Logging.h"
-#include "folly/Likely.h"
-
 namespace yg {
 
 ChooseIter::ChooseIter()
     : n_(0), result_(0), idx_(0), cards_(0), has_more_(false) {}
 
 ChooseIter::ChooseIter(const Deck &d, unsigned int n)
-    : n_(n), result_(n), idx_(n), cards_(52 - d.next_card()), has_more_(true) {
-  const auto &cards = d.cards();
-  int start = d.next_card();
-  for (unsigned int i = start; i < 52; i++) {
-    cards_[i - start] = cards[i];
-  }
-
+    : n_(n), result_(n), idx_(n), cards_(d.Cards()), has_more_(true) {
   // Fill the starting idx
   for (unsigned int x = 0; x < n_; x++) {
     idx_[x] = x;
@@ -46,7 +37,7 @@ ChooseIter &ChooseIter::operator++() {
 
       // If we were already at the last level then
       // just give up and bail out.
-      if (UNLIKELY(level == 0)) {
+      if (level == 0) {
         has_more_ = false;
         return *this;
       }
@@ -77,4 +68,4 @@ bool ChooseIter::operator==(const ChooseIter &rhs) {
 bool ChooseIter::operator!=(const ChooseIter &rhs) {
   return has_more() != rhs.has_more();
 }
-} // namespace yg
+}  // namespace yg
