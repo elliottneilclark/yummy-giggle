@@ -1,5 +1,3 @@
 build --cxxopt -std=c++14
-build --cxxopt -msse 
-build --cxxopt -msse2 
-build --cxxopt -msse3 
+build --copt -march=ivybridge
 test --no_cache_test_results

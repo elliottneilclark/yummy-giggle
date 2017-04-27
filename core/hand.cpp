@@ -25,7 +25,7 @@ constexpr std::uint16_t kWheel =
 
 Hand::Hand() : cards_(), computed_rank_(boost::none) {}
 
-Hand::Hand(const std::string& str) : cards_(), computed_rank_(boost::none) {
+Hand::Hand(const std::string &str) : cards_(), computed_rank_(boost::none) {
   auto it = str.begin();
   while (it != str.end()) {
     auto first = *(it++);
@@ -52,11 +52,11 @@ uint64_t Hand::Rank() const {
 }
 
 boost::optional<std::uint64_t> FindFlush(
-    const std::array<std::uint16_t, 4> &suit_to_vmap) {
-  auto it = std::find_if(suit_to_vmap.begin(), suit_to_vmap.end(),
-                         [](auto s) { return Bits::popcnt(s) >= 5; });
-  if (it != suit_to_vmap.end()) {
-    return std::distance(suit_to_vmap.begin(), it);
+    const std::array<std::uint16_t, 4> &suit_to_count) {
+  for (int i = 0; i < 4; i++) {
+    if (suit_to_count[i] >= 5) {
+      return i;
+    }
   }
   return boost::none;
 }
@@ -75,52 +75,78 @@ boost::optional<std::uint64_t> RankStraight(std::uint16_t vmap) {
 uint64_t Hand::ComputeRank() const {
   auto value_to_count = std::array<std::uint8_t, 13>{0};
   auto count_to_vmap = std::array<std::uint16_t, 5>{0};
+  auto suit_to_count = std::array<std::uint16_t, 4>{0};
   auto suit_to_vmap = std::array<std::uint16_t, 4>{0};
   auto vmap = std::uint16_t{0};
+
   for (const Card &c : cards_) {
     value_to_count[c.value()] += 1;
     suit_to_vmap[c.suit()] |= 1 << c.value();
+    suit_to_count[c.suit()] += 1;
     vmap |= 1 << c.value();
   }
 
   for (auto it = value_to_count.begin(); it != value_to_count.end(); it++) {
-    auto index = std::distance(value_to_count.begin(), it);
-    count_to_vmap[*it] |= 1 << index;
+    auto count = *it;
+    // no need to keep track of the cards that
+    // aren't in the hand. This is preformance improvement.
+    if (count == 0) {
+      continue;
+    }
+    auto value = std::distance(value_to_count.begin(), it);
+    count_to_vmap[count] |= 1 << value;
   }
+
   // Check to see if there is a flush
-  auto flush = FindFlush(suit_to_vmap);
+  auto flush = FindFlush(suit_to_count);
 
   if (flush) {
     if (auto straight_rank = RankStraight(suit_to_vmap[*flush])) {
       return kStraightFlush | *straight_rank;
-    } else {
-      return kFlush | Bits::KeepNHighest(suit_to_vmap[*flush], 5);
     }
-  } else if (count_to_vmap[4] != 0) {
+    return kFlush | Bits::KeepNHighest(suit_to_vmap[*flush], 5);
+  }
+
+  // Check if there are four of a kind.
+  if (count_to_vmap[4] != 0) {
     auto card = count_to_vmap[4];
     auto other = Bits::KeepHighest(vmap ^ count_to_vmap[4]);
     return kFourOfAKind | card << 13 | other;
-  } else if (count_to_vmap[3] != 0 && Bits::popcnt(count_to_vmap[3]) >= 2) {
+  }
+
+  // If we have two sets then we can have a full house.
+  if (count_to_vmap[3] != 0 && Bits::popcnt(count_to_vmap[3]) >= 2) {
     // If we have two sets then a full house is the best we can do.
     auto set_card = Bits::KeepHighest(count_to_vmap[3]);
     auto pair = count_to_vmap[3] ^ set_card;
     return kFullHouse | set_card << 13 | pair;
-  } else if (count_to_vmap[3] != 0 && count_to_vmap[2] != 0) {
+  }
+  // It's also possible to have a normal full house. So check for that.
+  if (count_to_vmap[3] != 0 && count_to_vmap[2] != 0) {
     // This is the normal full house.
     // Keep the set
     // Then keep the highest pair.
     return kFullHouse | count_to_vmap[3] << 13 |
            Bits::KeepHighest(count_to_vmap[2]);
-  } else if (auto straight_rank = RankStraight(vmap)) {
+  }
+
+  // Check to see if we have a straight.
+  if (auto straight_rank = RankStraight(vmap)) {
     // This is a straight.
     return kStraight | *straight_rank;
-  } else if (count_to_vmap[3] != 0) {
+  }
+
+  // Do we have three of a kind ?
+  if (count_to_vmap[3] != 0) {
     // Three of a kind.
     // Keep the set
     // Keep the highest cards other than the set.
     return kThreeOfAKind | count_to_vmap[3] << 13 |
            Bits::KeepNHighest(vmap ^ count_to_vmap[3], 2);
-  } else if (count_to_vmap[2] != 0) {
+  }
+
+  // If we have at least a pair then determine if we have two pair.
+  if (count_to_vmap[2] != 0) {
     // If there are any pairs then it's either a single pair or
     // two pair.
     if (Bits::popcnt(count_to_vmap[2]) >= 2) {
@@ -135,6 +161,8 @@ uint64_t Hand::ComputeRank() const {
              Bits::KeepNHighest(vmap ^ count_to_vmap[2], 3);
     }
   }
+
+  // Otherwise this is only the highest cards.
   return kHighCard | Bits::KeepNHighest(vmap, 5);
 }
 

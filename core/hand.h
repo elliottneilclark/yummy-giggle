@@ -23,11 +23,12 @@ constexpr auto kHighCard = 1ul << 55;
 class Hand {
  public:
   Hand();
-  Hand(const std::string& str);
+  Hand(const std::string &str);
   Hand(const Hand &rhs);
   void AddCard(Card c);
   void RemoveLast();
   void Clear();
+  void ClearRank() { computed_rank_ = boost::none; }
   uint64_t Rank() const;
   int size() const { return cards_.size(); }
   friend std::ostream &operator<<(::std::ostream &os, const Hand &hand);
