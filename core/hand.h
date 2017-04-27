@@ -10,9 +10,20 @@
 
 namespace yg {
 
+constexpr auto kStraightFlush = 1ul << 63;
+constexpr auto kFourOfAKind = 1ul << 62;
+constexpr auto kFullHouse = 1ul << 61;
+constexpr auto kFlush = 1ul << 60;
+constexpr auto kStraight = 1ul << 59;
+constexpr auto kThreeOfAKind = 1ul << 58;
+constexpr auto kTwoPair = 1ul << 57;
+constexpr auto kOnePair = 1ul << 56;
+constexpr auto kHighCard = 1ul << 55;
+
 class Hand {
  public:
   Hand();
+  Hand(const std::string& str);
   Hand(const Hand &rhs);
   void AddCard(Card c);
   void RemoveLast();

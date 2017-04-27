@@ -20,20 +20,19 @@ using std::unordered_map;
 using std::array;
 using std::string;
 
-constexpr auto kStraightFlush = 1ul << 63;
-constexpr auto kFourOfAKind = 1ul << 62;
-constexpr auto kFullHouse = 1ul << 61;
-constexpr auto kFlush = 1ul << 60;
-constexpr auto kStraight = 1ul << 59;
-constexpr auto kThreeOfAKind = 1ul << 58;
-constexpr auto kTwoPair = 1ul << 57;
-constexpr auto kOnePair = 1ul << 56;
-constexpr auto kHighCard = 1ul << 55;
-
 constexpr std::uint16_t kWheel =
     (1 << kAce) | (1 << kTwo) | (1 << kThree) | (1 << kFour) | (1 << kFive);
 
-Hand::Hand() : cards_(), computed_rank_(-1) {}
+Hand::Hand() : cards_(), computed_rank_(boost::none) {}
+
+Hand::Hand(const std::string& str) : cards_(), computed_rank_(boost::none) {
+  auto it = str.begin();
+  while (it != str.end()) {
+    auto first = *(it++);
+    auto second = *(it++);
+    AddCard(Card{first, second});
+  }
+}
 
 Hand::Hand(const Hand &rhs)
     : cards_(rhs.cards_), computed_rank_(rhs.computed_rank_) {}
@@ -46,7 +45,7 @@ void Hand::Clear() {
 }
 
 uint64_t Hand::Rank() const {
-  if (computed_rank_) {
+  if (!computed_rank_) {
     computed_rank_ = ComputeRank();
   }
   return *computed_rank_;

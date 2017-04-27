@@ -55,6 +55,7 @@ class Card {
  public:
   Card();
   explicit Card(std::string s);
+  Card(char value, char suit);
   Card(std::uint16_t value, std::uint8_t suit);
   std::uint16_t value() const { return value_; }
   std::uint8_t suit() const { return suit_; }
