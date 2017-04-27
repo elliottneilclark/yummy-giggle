@@ -13,9 +13,6 @@ http_file(
     name="gflags_tar",
     url="https://github.com/gflags/gflags/archive/v2.2.0.tar.gz")
 http_file(
-    name="googletest_tar",
-    url="https://github.com/google/googletest/archive/release-1.8.0.tar.gz")
-http_file(
     name="libunwind_tar",
     url=
     "http://download.savannah.nongnu.org/releases/libunwind/libunwind-1.1.tar.gz"
@@ -35,3 +32,9 @@ new_git_repository(
     commit="3336ea00d892fc312715c3a00d33a9568261e86a",
     remote="https://github.com/google/benchmark.git",
     build_file="third_party/benchmark/benchmark.BUILD", )
+new_git_repository(
+    name="google_gtest",
+    commit="aa148eb2b7f70ede0eb10de34b6254826bfb34f4",
+    remote="https://github.com/google/googletest.git",
+    build_file="third_party/gtest/gtest.BUILD",
+)

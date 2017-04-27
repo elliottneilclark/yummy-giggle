@@ -4,7 +4,7 @@ cc_library(
     srcs=glob(["src/*.cc", "src/*.h"]),
     hdrs=glob(["include/benchmark/*.h"]),
     includes=["include/"],
-    linkopts = ["-pthread"],
+    linkopts=["-pthread"],
     deps=["@//third_party/gflags:gflags-cxx"],
     defines=["HAVE_STD_REGEX"], )
 py_library(
