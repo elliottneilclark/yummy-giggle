@@ -69,7 +69,7 @@ cc_library(
     name="glog-cxx",
     srcs=["empty.cc"] + lib_files,
     deps=[
-        "//third_party/gflags:gflags-cxx",
+        "@com_github_gflags_gflags//:gflags",
         "//third_party/libunwind:libunwind-cxx",
     ],
     hdrs=include_files,

@@ -5,7 +5,7 @@ cc_library(
     hdrs=glob(["include/benchmark/*.h"]),
     includes=["include/"],
     linkopts=["-pthread"],
-    deps=["@//third_party/gflags:gflags-cxx"],
+    deps=["@com_github_gflags_gflags//:gflags"],
     defines=["HAVE_STD_REGEX"], )
 py_library(
     name="gbench",

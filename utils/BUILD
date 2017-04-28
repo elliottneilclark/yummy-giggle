@@ -5,6 +5,5 @@ cc_library(
 cc_test(
     name="bits_test",
     srcs=["bits_test.cpp"],
-    deps=[":bits", "//third_party/gtest:gtest_main-cxx"],
-    linkstatic=1,
+    deps=["@google_gtest//:gtest-cxx", ":bits"],
     size="small", )

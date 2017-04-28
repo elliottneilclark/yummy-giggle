@@ -6,12 +6,14 @@ git_repository(
     name="double_conversion",
     commit="4abe3267170fa52f39460460456990dbae803f4d",
     remote="https://github.com/google/double-conversion.git")
+git_repository(
+    name="com_github_gflags_gflags",
+    commit="9314597d4b742ed6f95665241345e590a0f5759b",
+    remote="https://github.com/gflags/gflags.git",
+)
 http_file(
     name="glog_tar",
     url="https://github.com/google/glog/archive/v0.3.4.tar.gz")
-http_file(
-    name="gflags_tar",
-    url="https://github.com/gflags/gflags/archive/v2.2.0.tar.gz")
 http_file(
     name="libunwind_tar",
     url=
