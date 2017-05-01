@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package yg;
+
+service Simulate {
+    rpc Simulate (SimulateRequest) returns (SimulateResponse);
+}
+
+message SimulateRequest {
+    repeated string hands = 1;
+    string board = 2;
+    uint64 time_ms = 3;
+}
+
+message SimulateResponse {
+    repeated uint64 wins = 1;
+    uint64 total_games = 2;
+}

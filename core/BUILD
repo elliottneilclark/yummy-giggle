@@ -4,14 +4,14 @@ cc_library(
     srcs=["card.cpp"],
     hdrs=["card.h"],
     deps=[
-        "//third_party/glog:glog-cxx", 
+        "//third_party/glog:glog-cxx",
         "//utils:bits",
         "//third_party/boost:functional-cxx",
     ], )
 cc_test(
     name="card_test",
     srcs=["card_test.cpp"],
-    deps=["@google_gtest//:gtest-cxx", ":card"],
+    deps=["@google_gtest//:gtest-cxx", "@google_gtest//:gmock-cxx", ":card"],
     linkstatic=1,
     size="small", )
 cc_library(
@@ -19,8 +19,8 @@ cc_library(
     srcs=["hand.cpp"],
     hdrs=["hand.h"],
     deps=[
-        "//third_party/glog:glog-cxx", 
-        "//utils:bits", 
+        "//third_party/glog:glog-cxx",
+        "//utils:bits",
         ":card",
         "//third_party/boost:optional-cxx",
     ], )
